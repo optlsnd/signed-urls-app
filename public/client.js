@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("signed-url-form");
+  const resultContainer = document.createElement("div");
+  resultContainer.id = "result-container";
+  form.parentNode.insertBefore(resultContainer, form.nextSibling);
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -17,9 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
 
       if (data.signedURL) {
-        alert(`Signed URL: ${data.signedURL}`);
+        resultContainer.innerHTML = `<a href="${data.signedURL}" target="_blank">Signed URL</a>`;
       } else {
-        alert("Failed to get signed URL");
+        resultContainer.textContent = "Failed to get signed URL";
       }
 
       form.reset();
